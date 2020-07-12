@@ -1,0 +1,14 @@
+[gd_resource type="ParticlesMaterial" format=2]
+
+[resource]
+emission_shape = 2
+emission_box_extents = Vector3( 0, 10, 0 )
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 1000, 0, 0 )
+initial_velocity = 333.33
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 10.0
+scale_random = 0.25
+color = Color( 0.521569, 0.188235, 0.188235, 1 )

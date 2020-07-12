@@ -1,0 +1,149 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Sprites/Logo.png" type="Texture" id=1]
+[ext_resource path="res://Scenes/Buttons/ExitButton.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Scenes/Buttons/MusicButton.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/GameplayScreens/TitleScreen.gd" type="Script" id=4]
+[ext_resource path="res://Scenes/Buttons/StartButton.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Scenes/Buttons/ControlsButton.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Sounds/TitleMusic.wav" type="AudioStream" id=7]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 4.30909, 0, 0, Vector2( 1, 0 ), -5.17091, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+width = 2052
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 700, 1 )
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 1.0
+scale_curve = SubResource( 2 )
+hue_variation = -1.0
+hue_variation_random = 0.05
+
+[sub_resource type="Animation" id=4]
+resource_name = "TitleBob"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 10 ), Vector2( 0, -10 ), Vector2( 0, 10 ) ]
+}
+
+[sub_resource type="DynamicFontData" id=5]
+font_path = "res://Fonts/8-bit-pusab.ttf"
+
+[sub_resource type="DynamicFont" id=6]
+size = 15
+font_data = SubResource( 5 )
+
+[node name="TitleScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stars" type="Particles2D" parent="."]
+position = Vector2( 960, 540 )
+z_index = -100
+z_as_relative = false
+amount = 100
+lifetime = 4.0
+preprocess = 10.0
+visibility_rect = Rect2( -980.102, -693.527, 1979.06, 1392.93 )
+process_material = SubResource( 3 )
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 1080.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Logo" type="TextureRect" parent="Menu"]
+margin_right = 1720.0
+margin_bottom = 375.0
+texture = ExtResource( 1 )
+stretch_mode = 1
+
+[node name="TitleBob" type="AnimationPlayer" parent="Menu/Logo"]
+anims/TitleBob = SubResource( 4 )
+
+[node name="MainRow" type="HBoxContainer" parent="Menu"]
+margin_top = 379.0
+margin_right = 1720.0
+margin_bottom = 949.0
+size_flags_vertical = 3
+custom_constants/separation = 1000
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Buttons" type="VBoxContainer" parent="Menu/MainRow"]
+margin_right = 600.0
+margin_bottom = 570.0
+size_flags_horizontal = 0
+size_flags_vertical = 3
+custom_constants/separation = 50
+alignment = 1
+
+[node name="StartButton" parent="Menu/MainRow/Buttons" instance=ExtResource( 5 )]
+margin_top = 85.0
+margin_bottom = 185.0
+
+[node name="ControlsButton" parent="Menu/MainRow/Buttons" instance=ExtResource( 6 )]
+margin_top = 235.0
+margin_bottom = 335.0
+
+[node name="ExitButton" parent="Menu/MainRow/Buttons" instance=ExtResource( 2 )]
+margin_top = 385.0
+margin_bottom = 485.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Menu/MainRow"]
+margin_left = 1600.0
+margin_right = 1720.0
+margin_bottom = 570.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/margin_top = 450
+
+[node name="MusicButton" parent="Menu/MainRow/MarginContainer" instance=ExtResource( 3 )]
+margin_top = 450.0
+margin_right = 120.0
+margin_bottom = 570.0
+
+[node name="VersionLabel" type="Label" parent="Menu"]
+margin_top = 953.0
+margin_right = 1720.0
+margin_bottom = 981.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.235294, 0.521569, 0.188235, 1 )
+custom_colors/font_color_shadow = Color( 0.2, 0.419608, 0.160784, 1 )
+text = "ver 1.1.1                                                                                                                                                                       Ben Tansell, Age 21"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 7 )

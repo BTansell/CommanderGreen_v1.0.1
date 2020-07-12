@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/MenuHover.wav-0f91617ab7b02fa0ce3efabc08ecff2e.sample"
+
+[deps]
+
+source_file="res://Sounds/MenuHover.wav"
+dest_files=[ "res://.import/MenuHover.wav-0f91617ab7b02fa0ce3efabc08ecff2e.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/DifficultyMusic.wav-3462821c8a630e42f57246145bc6595d.sample"
+
+[deps]
+
+source_file="res://Sounds/DifficultyMusic.wav"
+dest_files=[ "res://.import/DifficultyMusic.wav-3462821c8a630e42f57246145bc6595d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

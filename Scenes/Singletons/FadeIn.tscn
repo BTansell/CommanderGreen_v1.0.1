@@ -1,0 +1,24 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="Animation" id=8]
+resource_name = "MenuFadeIn"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="FadeIn" type="CanvasModulate"]
+pause_mode = 2
+z_index = 100
+
+[node name="FadeInAnimation" type="AnimationPlayer" parent="."]
+anims/MenuFadeIn = SubResource( 8 )

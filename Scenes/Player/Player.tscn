@@ -1,0 +1,160 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Sprites/Player.png" type="Texture" id=1]
+[ext_resource path="res://Sprites/PlayerRocket.png" type="Texture" id=2]
+[ext_resource path="res://Scripts/Player/Player.gd" type="Script" id=3]
+[ext_resource path="res://Sounds/Laser.wav" type="AudioStream" id=4]
+[ext_resource path="res://Sounds/Explosion.wav" type="AudioStream" id=5]
+[ext_resource path="res://Sounds/PlayerDeath.wav" type="AudioStream" id=6]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 60, 30 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 60, 0, 60, 30 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 30, 60, 30 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 60, 30, 60, 30 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 60, 60, 30 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 60, 60, 60, 30 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ) ],
+"loop": true,
+"name": "Forward",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 3 ), SubResource( 4 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "Backward",
+"speed": 5.0
+} ]
+
+[sub_resource type="ParticlesMaterial" id=8]
+emission_shape = 2
+emission_box_extents = Vector3( 0, 10, 0 )
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 0.0
+gravity = Vector3( -1000, 0, 0 )
+initial_velocity = 333.33
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 10.0
+scale_random = 0.25
+color = Color( 0.235294, 0.521569, 0.188235, 1 )
+
+[sub_resource type="ParticlesMaterial" id=9]
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 149.43
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 20.0
+scale_random = 1.0
+color = Color( 0.235294, 0.521569, 0.188235, 1 )
+
+[node name="Player" type="KinematicBody2D"]
+position = Vector2( 0, 3.5 )
+scale = Vector2( 0.75, 0.75 )
+collision_layer = 0
+collision_mask = 2147483648
+script = ExtResource( 3 )
+
+[node name="Ship" type="Sprite" parent="."]
+position = Vector2( 0, 4 )
+z_index = -1
+texture = ExtResource( 1 )
+
+[node name="Rocket" type="AnimatedSprite" parent="."]
+position = Vector2( -104.833, -3.53315 )
+z_index = -1
+frames = SubResource( 7 )
+animation = "Idle"
+frame = 1
+playing = true
+
+[node name="ProjectileEmitter" type="Area2D" parent="."]
+position = Vector2( 80, -3.528 )
+z_index = 5
+
+[node name="CollisionArea" type="Area2D" parent="."]
+collision_mask = 28
+
+[node name="HitBox" type="CollisionPolygon2D" parent="CollisionArea"]
+visible = false
+polygon = PoolVector2Array( -60.2914, 55.2499, -30.2575, 56.5847, -30.2575, 40.5666, 0.443787, 41.234, -0.223633, 25.8834, 29.8103, 25.216, 29.8103, 11.2001, 59.8441, 11.2001, 59.8441, -4.15051, 74.5274, -4.81793, 74.5274, -18.8337, -15.5743, -18.8337, -14.9069, -33.517, -29.5901, -34.1844, -29.5901, -48.8676, -60.2914, -49.5351, -60.9589, -33.517, -44.2733, -32.8496, -44.2733, -18.8337, -75.6421, -18.8337, -74.9747, 10.5327, -60.2914, 9.86531, -60.2914, 26.5508, -44.9408, 25.8834, -45.6082, 41.234, -60.2914, 41.234 )
+
+[node name="RocketParticles" type="Particles2D" parent="."]
+position = Vector2( -74.2514, -3.77551 )
+z_index = -10
+amount = 2
+lifetime = 0.5
+explosiveness = 0.13
+local_coords = false
+process_material = SubResource( 8 )
+
+[node name="ExplosionParticles" type="Particles2D" parent="."]
+emitting = false
+amount = 20
+one_shot = true
+speed_scale = 2.0
+explosiveness = 0.74
+local_coords = false
+process_material = SubResource( 9 )
+
+[node name="Explosion" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
+
+[node name="Laser" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 4 )
+volume_db = -4.039
+
+[node name="PlayerDeath" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+
+[node name="BulletCooldown" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="PowerUpCooldown" type="Timer" parent="."]
+wait_time = 10.0
+one_shot = true
+
+[node name="PowerUpFlash" type="Timer" parent="."]
+wait_time = 0.25
+one_shot = true
+
+[node name="DeathCooldown" type="Timer" parent="."]
+wait_time = 5.0
+one_shot = true
+[connection signal="timeout" from="BulletCooldown" to="." method="_on_BulletCooldown_timeout"]
+[connection signal="timeout" from="PowerUpCooldown" to="." method="_on_PowerUpCooldown_timeout"]
+[connection signal="timeout" from="PowerUpFlash" to="." method="_on_PowerUpFlash_timeout"]
+[connection signal="timeout" from="DeathCooldown" to="." method="_on_DeathCooldown_timeout"]

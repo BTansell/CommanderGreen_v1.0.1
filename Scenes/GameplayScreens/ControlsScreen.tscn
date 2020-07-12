@@ -1,0 +1,101 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Scripts/GameplayScreens/ControlsScreen.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/Controls.png" type="Texture" id=3]
+[ext_resource path="res://Fonts/CommanderGreenFont60.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Sounds/ControlsMusic.wav" type="AudioStream" id=5]
+[ext_resource path="res://Scenes/Buttons/ReturnButton.tscn" type="PackedScene" id=6]
+
+[sub_resource type="Curve" id=1]
+_data = [ Vector2( 0, 0 ), 0.0, 4.30909, 0, 0, Vector2( 1, 0 ), -5.17091, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=2]
+width = 2052
+curve = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 1000, 700, 1 )
+flag_disable_z = true
+direction = Vector3( -1, 0, 0 )
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 15.0
+scale_random = 1.0
+scale_curve = SubResource( 2 )
+hue_variation = -1.0
+hue_variation_random = 0.05
+
+[node name="ControlsScreen" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stars" type="Particles2D" parent="."]
+position = Vector2( 960, 540 )
+z_index = -100
+z_as_relative = false
+amount = 100
+lifetime = 4.0
+preprocess = 10.0
+visibility_rect = Rect2( -980.102, -693.527, 1979.06, 1392.93 )
+process_material = SubResource( 3 )
+
+[node name="Menu" type="VBoxContainer" parent="."]
+margin_left = 100.0
+margin_top = 100.0
+margin_right = 1820.0
+margin_bottom = 1080.0
+custom_constants/separation = 100
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopRow" type="HBoxContainer" parent="Menu"]
+margin_right = 1720.0
+margin_bottom = 660.0
+custom_constants/separation = 200
+alignment = 1
+
+[node name="ControlsLabel" type="Label" parent="Menu/TopRow"]
+margin_left = 392.0
+margin_top = 49.0
+margin_right = 692.0
+margin_bottom = 611.0
+custom_fonts/font = ExtResource( 4 )
+custom_colors/font_color = Color( 0.235294, 0.521569, 0.188235, 1 )
+custom_colors/font_color_shadow = Color( 0.2, 0.419608, 0.160784, 1 )
+custom_constants/shadow_offset_y = -8
+text = "
+Move
+
+
+Shoot"
+align = 1
+valign = 1
+
+[node name="ControlsImage" type="TextureRect" parent="Menu/TopRow"]
+margin_left = 892.0
+margin_right = 1327.0
+margin_bottom = 660.0
+texture = ExtResource( 3 )
+
+[node name="BottomRow" type="HBoxContainer" parent="Menu"]
+margin_top = 760.0
+margin_right = 1720.0
+margin_bottom = 860.0
+alignment = 1
+
+[node name="ReturnButton" parent="Menu/BottomRow" instance=ExtResource( 6 )]
+margin_left = 560.0
+margin_top = 0.0
+margin_right = 1160.0
+margin_bottom = 100.0
+
+[node name="ControlsMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 5 )
